@@ -1,0 +1,44 @@
+*, *::before, *::after{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+}
+
+
+.m-35{
+  margin-top: 30px;
+}
+
+.sidebar{
+  position: fixed;
+  width: 180px;
+  margin-top: 30px;
+}
+
+.sidebar-link{
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  line-height: 300%;
+}
+
+.content{
+  margin-left: 280px;
+  width: 100%;
+}
+
+.img-products{
+  margin-left: 45px;
+  margin-top: 33px;
+  width: 150px;
+}
+
+.card-link{
+  color: black;
+  display: block;
+  text-decoration: none;
+}
+

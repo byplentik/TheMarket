@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Категория')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
@@ -20,7 +21,7 @@ class Category(models.Model):
 
 class ImageForProduct(models.Model):
     img_product = models.ImageField(upload_to='products/')
-    
+    product = models.ForeignKey("Product", verbose_name="Продукт", on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = ("ImageForProducts")
@@ -33,7 +34,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='Цена')
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.CASCADE)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], verbose_name='Рейтинг')
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], verbose_name='Рейтинг', blank=True, null=True)
     
 
     class Meta:

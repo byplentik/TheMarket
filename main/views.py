@@ -1,10 +1,22 @@
 from django.shortcuts import render
 from django.views import generic
 
-from .models import Product
+from .models import Product, Category
 
 
 class HomeListView(generic.ListView):
     template_name = 'main/homelist.html'
     model = Product
-    
+
+
+class CategoryDetailView(generic.DetailView):
+    model = Category
+    template_name = 'main/categories.html'
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.filter(category=self.object)
+        return context
+
+

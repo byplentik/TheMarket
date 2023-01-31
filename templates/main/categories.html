@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{category.name}}</h1>
+<h3>{{category.name}}</h3>
 
 {% for product in products %}
 <div class="card mb-3 m-35" style="width: 840px;">
@@ -10,7 +10,7 @@
         <img class="img-products" src="{{ product.imageforproduct_set.first.img_product.url }}"  alt="...">
       </div>
       <div class="col-md-8">
-        <a href="#" class="card-link"><div class="card-body">
+        <a href="{{product.get_absolute_url}}" class="card-link"><div class="card-body">
           <h5 class="card-title">{{product.name}}</h5>
           <p class="card-text">{{product.description|truncatewords:25}}</p>
           <p class="card-text text-warning">{{product.price}} рублей</p></a>

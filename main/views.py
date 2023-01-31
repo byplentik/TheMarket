@@ -20,3 +20,9 @@ class CategoryDetailView(generic.DetailView):
         return context
 
 
+class ProductDetailView(generic.DetailView):
+    model = Product
+    template_name = 'main/product_detail.html'
+    context_object_name = 'product'
+
+

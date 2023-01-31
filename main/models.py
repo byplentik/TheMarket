@@ -6,7 +6,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name='Категория')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    
 
     class Meta:
         verbose_name = ("Category")

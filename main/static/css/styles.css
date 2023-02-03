@@ -128,3 +128,12 @@ body{
   color: #333;
   margin-bottom: 30px;
 }
+
+.login{
+  color: orange;
+  text-decoration: none;
+}
+
+.login-links{
+  margin-right: 35px;
+}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Войти</h3>
+
+{% if form.errors %}
+<p style="color: red;">Вы ввели не правильный логин или пароль</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+        <input type="text" class="form-control" name="{{form.username.name}}" id="{{form.username.id_for_label}}" required>
+    </div>
+    <div class="form-group">
+        <label for="{{ form.password.id_for_label }}">Пароль</label>
+        <input type="password" class="form-control" name="{{form.password.name}}" id="{{form.password.id_for_label}}" required>
+    </div>
+    <br>    
+    <input class="btn btn-primary" type="submit" value="Войти">
+</form>
+{% endblock content %}

@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 
 class Category(models.Model):
@@ -33,7 +35,6 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='Цена')
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.CASCADE)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], verbose_name='Рейтинг', blank=True, null=True)
     
 
     class Meta:
@@ -45,3 +46,5 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse("product_detail", kwargs={"slug": self.slug})
+
+

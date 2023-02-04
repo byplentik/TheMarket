@@ -32,7 +32,7 @@
         <a href="{% url 'logout' %}" class="login">{{user.username}}</a>
         {% else %}
         <a href="{% url 'login' %}" class="login">Войти</a> / 
-        <a href="#" class="login">Зарегистрироваться</a>
+        <a href="{% url 'register' %}" class="login">Зарегистрироваться</a>
         {% endif %}
       </div>
       <form class="d-flex">

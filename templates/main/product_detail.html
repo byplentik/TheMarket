@@ -16,15 +16,9 @@
     <div class="product-info">
       <p class="product-price">{{ product.price }} рублей</p>
       <p class="product-category">{{ product.category.name }}</p>
-      <p class="product-rating">Средний рейтинг: {{ product.rating }}</p>
     </div>
     <div class="product-description">
       <p>{{ product.description }}</p>
-      <form action="{% url 'product_rating' product.slug %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input class="btn btn-warning" type="submit" value="Оценить">
-      </form>
     </div>
   </div>
   <a href="#"><button type="button" class="btn btn-warning">Добавить в корзину</button></a>

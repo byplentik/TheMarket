@@ -1,6 +1,6 @@
 from django.views import generic
 
-from .models import Product, Category
+from .models import Product, Category, Review
 
 
 class HomeListView(generic.ListView):
@@ -23,10 +23,3 @@ class ProductDetailView(generic.DetailView):
     model = Product
     template_name = 'main/product_detail.html'
     context_object_name = 'product'
-
-
-
-
-
-
-

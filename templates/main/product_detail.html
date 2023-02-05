@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="product-model">
+  <div class="product-model">
     <div class="product-header">
-      <h3>{{ product.name }}</h2>
+      <h3>{{ product.name }}</h3>
     </div>
     <div class="product-image-container">
       <img src="{{ product.imageforproduct_set.first.img_product.url }}" alt="{{ product.name }}" class="product-image">
@@ -22,15 +22,15 @@
     </div>
   </div>
   <a href="#"><button type="button" class="btn btn-warning">Добавить в корзину</button></a>
-<script>
-const productImageContainer = document.querySelector('.product-image-container');
-const productImage = document.querySelector('.product-image');
-const productThumbnails = document.querySelectorAll('.thumbnail');
-
-productThumbnails.forEach(thumbnail => {
-  thumbnail.addEventListener('click', function() {
-    productImage.src = this.src;
-  });
-});
-</script>
+  <script>
+    const productImageContainer = document.querySelector('.product-image-container');
+    const productImage = document.querySelector('.product-image');
+    const productThumbnails = document.querySelectorAll('.thumbnail');
+    
+    productThumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        productImage.src = this.src;
+      });
+    });
+    </script>
 {% endblock content %}

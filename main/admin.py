@@ -19,5 +19,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'price', 'category']
     prepopulated_fields = {'slug': ('name',)}
 
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['user', 'product', 'created_at', 'updated_at']
+    
+
+
     
 

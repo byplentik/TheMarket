@@ -48,7 +48,7 @@ class Product(models.Model):
         
 
 class Review(models.Model):
-    review = models.CharField(max_length=255, verbose_name='Отзыв')
+    review = models.CharField(max_length=255, verbose_name='Отзыв', null=True)
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE, related_name='reviews')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания отзыва')
@@ -56,7 +56,7 @@ class Review(models.Model):
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name='рейтинг')
 
     def __str__(self):
-        return self.product
+        return f'{self.product}'
 
 
 

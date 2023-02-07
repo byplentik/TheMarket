@@ -145,3 +145,22 @@ body{
 .card{
   margin-bottom: 40px;
 }
+
+.review-form .form-control{
+  width: 40%;
+}
+
+.rewiew-rating{
+  position: absolute;
+  top: 5px;
+  right: 30px;
+  font-weight: 700;
+}
+
+.your-review{
+  width: 80%;
+}
+
+.form-delete{
+  display: inline;
+}

@@ -1,8 +1,9 @@
 from django.views import generic
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 
-from .models import Product, Category
+from .models import Product, Category, Review
 from .forms import ReviewForm
 
 
@@ -42,10 +43,25 @@ class AddReviewView(generic.CreateView):
         product = get_object_or_404(Product, slug=self.kwargs['slug'])
         form.instance.product = product
         return super().form_valid(form)
-    
 
     def get_success_url(self):
         return self.request.META.get('HTTP_REFERER')
+    
+
+class DeleteReviewView(generic.DeleteView):
+    model = Review
+    template_name = 'main/product_detail.html'
+
+    def get_object(self):
+        review_id = self.kwargs.get('review_id')
+        return get_object_or_404(Review, id=review_id)
+
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
+
+
+    
+
 
 
     

@@ -16,6 +16,7 @@
     <div class="product-info">
       <p class="product-price">{{ product.price }} рублей</p>
       <p class="product-category">{{ product.category.name }}</p>
+      <p class="product-category">Средний рейтинг товара: {{ average_rating|floatformat:1 }}</p>
     </div>
     <div class="product-description">
       <p>{{ product.description }}</p>
@@ -25,11 +26,15 @@
   <hr>
   <div class="reviews-section">
     <h3>Оставьте отзыв</h3>
+    {% if user.is_authenticated %}
     <form class="review-form" action="{% url 'add_review' slug=product.slug %}" method="post">
       {% csrf_token %}
       {{ form.as_p }}
       <button class="btn btn-warning" type="submit">Оставить отзыв</button>
     </form>
+    {% else %}
+    <a class="button" href="{% url 'login' %}">Вам нужно войти или зарегистрироваться, для того, чтобы оставить отзыв</a>
+    {% endif %}
   </div>
   {% if product.reviews.all %}
   <div class="existing-reviews">
@@ -44,7 +49,29 @@
           <div class="card-body">
             <h5 class="card-title">Оценка: {{review.get_rating_display}}</h5>
             <p class="card-text">{{review.review}}</p>
-            <a href="#" class="btn btn-primary">Изменить</a>  
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">Изменить отзыв</button>
+            <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Изменить отзыв</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{% url 'update_review' slug=product.slug review_id=review.id %}" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Применить изменения</button>
+                  </div>
+                    </form>
+                </div>
+              </div>
+            </div>
             <form class="form-delete" action="{% url 'delete_review' slug=product.slug review_id=review.id %}" method="post">
               {% csrf_token %}
               <input type="submit" value="Удалить" class="btn btn-danger">
@@ -57,8 +84,8 @@
     {% for review in product.reviews.all %}
     <div class="card" style="width: 80%;">
       <div class="card-header">
-        <p class="review-username">{{ review.user.username }} 
-          <p class="rewiew-rating" style="color: blue;">Оценка: {{ review.get_rating_display }}</p>
+        <p class="review-username">{{ review.user.username }} <p class="review-date">{{review.updated_at}}</p>
+          <p class="rewiew-rating" style="color: blue;">Оценка: {{review.rating}}: {{ review.get_rating_display }}</p>
         </p>
       </p>
       </div>
@@ -70,32 +97,7 @@
   </div>
   </div>
   {% endif %}
-
-
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <script>
     const productImageContainer = document.querySelector('.product-image-container');
     const productImage = document.querySelector('.product-image');
@@ -106,5 +108,25 @@
         productImage.src = this.src;
       });
     });
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('.review-form').submit(function(event) {
+          event.preventDefault();
+          $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(data) {
+              if (data.status === 'error') {
+                $('.reviews-section').prepend('<div class="alert alert-danger">' + data.message + '</div>');
+              } else {
+                location.reload();
+              }
+            }
+          });
+        });
+      });
     </script>
 {% endblock content %}

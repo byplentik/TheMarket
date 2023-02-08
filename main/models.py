@@ -1,7 +1,6 @@
 from django.db import models
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Category(models.Model):
@@ -64,10 +63,8 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Время обновления отзыва')
     rating = models.CharField(max_length=10, choices=DEFAULT_CHOICES, verbose_name='Оценка')
 
+    class Meta:
+        ordering = ['-updated_at']
+
     def __str__(self):
         return f'{self.product}'
-    
-    
-
-
-

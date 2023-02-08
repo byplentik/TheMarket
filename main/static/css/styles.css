@@ -152,7 +152,7 @@ body{
 
 .rewiew-rating{
   position: absolute;
-  top: 5px;
+  top: 10px;
   right: 30px;
   font-weight: 700;
 }
@@ -163,4 +163,10 @@ body{
 
 .form-delete{
   display: inline;
+}
+
+.review-date{
+  position: absolute;
+  top: 10px;
+  left: 350px;
 }

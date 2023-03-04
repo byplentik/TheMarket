@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<h3>Выход</h3>
+<p style="color: red;">Вы уверены что хотите выйти?</p>
+
+<form action="{% url 'account_logout' %}" method="post">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-warning">Выйти</button>
+
+</form>
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Мой профиль</h3>
+
+<a href="{% url 'account_logout' %}">Выйти</a>
+<br>
+<a href="{% url 'account_change_password' %}">Сменить пароль</a>
+
+{% endblock content %}

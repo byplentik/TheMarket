@@ -33,7 +33,7 @@
       <button class="btn btn-warning" type="submit">Оставить отзыв</button>
     </form>
     {% else %}
-    <a class="button" href="{% url 'login' %}">Вам нужно войти или зарегистрироваться, для того, чтобы оставить отзыв</a>
+    <a class="button" href="{% url 'account_login' %}">Вам нужно войти или зарегистрироваться, для того, чтобы оставить отзыв</a>
     {% endif %}
   </div>
   {% if product.reviews.all %}

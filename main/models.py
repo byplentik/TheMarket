@@ -48,11 +48,11 @@ class Product(models.Model):
 
 class Review(models.Model):
     DEFAULT_CHOICES = (
-    ('5', 'Отлично'),
-    ('4', 'Хорошо'),
-    ('3', 'Нормально'),
-    ('2', 'Плохо'),
-    ('1', 'Ужасно'),
+    (5, 'Отлично'),
+    (4, 'Хорошо'),
+    (3, 'Нормально'),
+    (2, 'Плохо'),
+    (1, 'Ужасно'),
     )
 
 
@@ -61,7 +61,7 @@ class Review(models.Model):
     product = models.ForeignKey(Product, verbose_name='Товар', on_delete=models.CASCADE, related_name='reviews')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания отзыва')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Время обновления отзыва')
-    rating = models.CharField(max_length=10, choices=DEFAULT_CHOICES, verbose_name='Оценка')
+    rating = models.IntegerField(choices=DEFAULT_CHOICES, verbose_name='Оценка')
 
     class Meta:
         ordering = ['-updated_at']

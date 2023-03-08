@@ -1,7 +1,8 @@
 from django.views import generic
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.http.response import JsonResponse
 from django.db.models.aggregates import Avg
+
 
 from .models import Product, Category, Review
 from .forms import ReviewForm
@@ -46,9 +47,6 @@ class AddReviewView(generic.CreateView):
     template_name = 'main/product_detail.html'
     
     def form_valid(self, form):
-        if not self.request.user.is_authenticated:
-            return JsonResponse({'status': 'error', 'message': 'You need to login or register in order to leave a review.'})
-
         form.instance.user = self.request.user
         product = get_object_or_404(Product, slug=self.kwargs['slug'])
         form.instance.product = product
@@ -57,20 +55,7 @@ class AddReviewView(generic.CreateView):
             return JsonResponse({'status': 'error', 'message': 'Извините, вы не можете добавить второй отзыв к одному и тому же продукту.'})
         
         review = form.save()
-        return JsonResponse({'status': 'success', 'username': review.user.username, 'content': review.review})
-
-           
-            # '''С перезагрузкой старницы'''
-            # context = {
-            #     'form': form,
-            #     'product': product,
-            #     "error_message": '''Извините, вы не можете добавить второй отзыв к одному и тому же продукту. 
-            #     Но вы можете изменить существующий отзыв или удалить его!'''
-            # }
-            # return render(self.request, self.template_name, context)
         
-        # return super().form_valid(form)
-
     def get_success_url(self):
         return self.request.META.get('HTTP_REFERER')
     

@@ -121,6 +121,8 @@
             success: function(data) {
               if (data.status === 'error') {
                 $('.reviews-section').prepend('<div class="alert alert-danger">' + data.message + '</div>');
+              } else {
+                location.reload();
               }
             }
           });

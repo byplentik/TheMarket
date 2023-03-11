@@ -49,17 +49,18 @@ class AddReviewView(generic.CreateView):
     
     def form_valid(self, form):
         form.instance.user = self.request.user
-        product = get_object_or_404(Product, slug=self.kwargs['slug'])
-        form.instance.product = product
+        self.product = get_object_or_404(Product, slug=self.kwargs['slug'])
+        form.instance.product = self.product
 
-        if Review.objects.filter(user=self.request.user, product=product).exists():
+        if Review.objects.filter(user=self.request.user, product=self.product).exists():
             return JsonResponse({'status': 'error', 'message': 'Извините, вы не можете добавить второй отзыв к одному и тому же продукту.'})
         
         review = form.save()
         return super().form_valid(form)
     
+    def get_success_url(self):
+        return self.request.META.get('HTTP_REFERER')
     
-        
 
 class DeleteReviewView(generic.DeleteView):
     model = Review

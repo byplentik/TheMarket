@@ -67,4 +67,4 @@ class Review(models.Model):
         ordering = ['-updated_at']
 
     def __str__(self):
-        return f'{self.product}'
+        return f'{self.user.username} : {self.review}'

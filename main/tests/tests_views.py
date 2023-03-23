@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 
 import datetime
 
+from main.forms import ReviewForm
 from main.models import Category, Product, Review
 
 
 
-class TestMainApplicationViews(TestCase):
+class MainApplicationTestCase(TestCase):
     def setUp(self):
         self.user1 = User.objects.create_user(
             username='user1',
@@ -93,8 +94,101 @@ class TestMainApplicationViews(TestCase):
     def test_category_detail_view(self):
         response = self.client.get(reverse('category_detail', kwargs={'slug': self.category.slug}))
         self.assertEqual(response.status_code, 200)
-        
+
+    def test_product_detail_view(self):
+        response = self.client.get(reverse('product_detail', kwargs={'slug': self.product1.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.request['PATH_INFO'], '/product/product1/')
+        self.assertEqual(response.context['form'], ReviewForm)
+        self.assertContains(response, 'Средний рейтинг товара: 4,0')
 
 
+class AddReviewViewTestCase(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(
+            name='category',
+            slug='category',
+        )
+
+        self.product1 = Product.objects.create(
+            name='product1',
+            description='description1',
+            price='500',
+            category=self.category,
+            slug='product1',
+        )
+
+        self.user1 = User.objects.create_user(
+            username='user1',
+            password='password',
+            email='user1@email.com'
+        )
+
+        self.url = reverse('add_review', kwargs={'slug': self.product1.slug})
+
+    def test_valid_form_submission(self):
+        review_data = {
+            'review': 'Test Review',
+            'rating': 4
+        }
+
+        self.client.login(username='user1', password='password')
+        response = self.client.post(self.url, data=review_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Review.objects.count(), 1)
+        self.assertEqual(Review.objects.first().user, self.user1)
+        self.assertEqual(Review.objects.first().product, self.product1)
+
+    def test_invalid_form_submission(self):
+        Review.objects.create(
+            review='review1',
+            user=self.user1,
+            product=self.product1,
+            created_at=datetime.datetime.today(),
+            updated_at=datetime.datetime.today(),
+            rating = 1
+        )
+
+        review_data = {
+            'review': 'Test Review',
+            'rating': 4
+        }
+
+        self.client.login(username='user1', password='password')
+        response = self.client.post(self.url, data=review_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {
+            'status': 'error',
+            'message': 'Извините, вы не можете добавить второй отзыв к одному и тому же продукту.'
+        })
 
 
+class DeleteReviewViewTestCase(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(
+            name='category',
+            slug='category',
+        )
+
+        self.product1 = Product.objects.create(
+            name='product1',
+            description='description1',
+            price='500',
+            category=self.category,
+            slug='product1',
+        )
+
+        self.user1 = User.objects.create_user(
+            username='user1',
+            password='password',
+            email='user1@email.com'
+        )
+
+        self.review = Review.objects.create(
+            review='review1',
+            user=self.user1,
+            product=self.product1,
+            created_at=datetime.datetime.today(),
+            updated_at=datetime.datetime.today(),
+            rating = 1
+        )

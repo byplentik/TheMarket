@@ -2,8 +2,6 @@ from django.views import generic
 from django.shortcuts import get_object_or_404, redirect
 from django.http.response import JsonResponse
 from django.db.models.aggregates import Avg
-from django.urls import reverse
-
 
 from .models import Product, Category, Review
 from .forms import ReviewForm
@@ -43,7 +41,7 @@ class ProductDetailView(generic.DetailView):
         return context
 
 
-class AddReviewView(generic.CreateView):
+class AddReviewView(generic. CreateView):
     form_class = ReviewForm
     template_name = 'main/product_detail.html'
     
@@ -56,10 +54,7 @@ class AddReviewView(generic.CreateView):
             return JsonResponse({'status': 'error', 'message': 'Извините, вы не можете добавить второй отзыв к одному и тому же продукту.'})
         
         review = form.save()
-        return super().form_valid(form)
-    
-    def get_success_url(self):
-        return self.request.META.get('HTTP_REFERER')
+        return JsonResponse({'status': 'success', 'url': self.product.get_absolute_url()})
     
 
 class DeleteReviewView(generic.DeleteView):

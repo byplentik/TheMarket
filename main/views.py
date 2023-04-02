@@ -2,6 +2,7 @@ from django.views import generic
 from django.shortcuts import get_object_or_404, redirect
 from django.http.response import JsonResponse
 from django.db.models.aggregates import Avg
+from django.db.models import Q
 
 from .models import Product, Category, Review
 from .forms import ReviewForm
@@ -84,3 +85,15 @@ class UpdateReviewView(generic.UpdateView):
     
     def get_success_url(self):
         return self.request.META.get('HTTP_REFERER')
+    
+
+class SearchResultView(generic.ListView):
+    model = Product
+    template_name = 'main/search_result.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        object_list = Product.objects.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+        )
+        return object_list

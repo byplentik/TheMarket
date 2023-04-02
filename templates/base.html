@@ -32,9 +32,6 @@
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="#">Новости</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Социальные сети</a>
-          </li>
       </div>
       <div class="login-links">
         {% if user.is_authenticated %}
@@ -44,9 +41,9 @@
         <a href="{% url 'account_signup' %}" class="login">Зарегистрироваться</a>
         {% endif %}
       </div>
-      <form class="d-flex">
-        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form action="{% url 'search_result' %}" method="get" class="d-flex">
+        <input name="q" class="form-control mr-2" type="search" placeholder="Поиск" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Поиск</button>
       </form>
     </div>
   </nav>

@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import *
-
+from .models import Category, ImageForProduct, Product, Review
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

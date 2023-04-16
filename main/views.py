@@ -42,7 +42,7 @@ class ProductDetailView(generic.DetailView):
         return context
 
 
-class AddReviewView(generic. CreateView):
+class AddReviewView(generic.CreateView):
     form_class = ReviewForm
     template_name = 'main/product_detail.html'
     

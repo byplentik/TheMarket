@@ -2,12 +2,39 @@
 
 {% block content %}
 <h3>Мой профиль</h3>
-
-<div class="basket">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ user_absolute_url }}">Профиль</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'account_change_password' %}">Сменить пароль</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'account_logout' %}">Выйти</a></li>
+    </ol>
+</nav>
+<div class="user-profile">
+    {% if user.avatar %}
+        <img src="{{ user.avatar.url }}" class="user-img" alt="">
+        <div class="user-infroration">
+            <p>Адрес электронной почты: {{ user.email }}</p>
+            {% if user.first_name and user.last_name %}
+            <p>Имя: {{ user.first_name }}</p>
+            <p>Фамилия: {{ user.last_name }}</p>
+            {% else %}
+            <form method="post">
+                {% csrf_token %} 
+                <p>
+                    <label for="id_first_name">Имя:</label>
+                    <input type="text" name="first_name" maxlength="150" id="id_first_name">                    
+                </p>
+                <p>
+                    <label for="id_last_name">Фамилия:</label>
+                    <input type="text" name="last_name" maxlength="150" id="id_last_name">                                        
+                </p>
+                <button type="submit" class="btn btn-warning">Сохрянить</button>
+            </form>
+            {% endif %}
+        </div>
+    {% else %}
+    <p>Аватар</p>
+    {% endif %}
 </div>
-
-<a href="{% url 'account_logout' %}">Выйти</a>
-<br>
-<a href="{% url 'account_change_password' %}">Сменить пароль</a>
 
 {% endblock content %}

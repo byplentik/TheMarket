@@ -4,6 +4,13 @@
 
 {% block content %}
 <h3>Выход</h3>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ user_absolute_url }}">Профиль</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'account_change_password' %}">Сменить пароль</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'account_logout' %}">Выйти</a></li>
+    </ol>
+</nav>
 <p style="color: red;">Вы уверены что хотите выйти?</p>
 
 <form action="{% url 'account_logout' %}" method="post">

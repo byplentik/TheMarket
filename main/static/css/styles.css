@@ -170,3 +170,20 @@ body{
   top: 10px;
   left: 350px;
 }
+
+.user-profile{
+  border: 2px solid #ccc;
+  padding: 20px;
+  border-radius: 10px; 
+  height: 300px;
+}
+
+.user-img{
+  position: absolute;
+}
+
+.user-infroration{
+  position: relative;
+  top: 50px;
+  left: 400px;
+}

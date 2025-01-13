@@ -1,8 +1,6 @@
 # TheMarket
 
-TheMarket is a personal project created to showcase my knowledge in Django and related libraries. The project is a web application that allows users to view products, leave reviews and ratings, and more. 
-
-I still haven't finished this project, at least I still need to make a shopping cart. 
+TheMarket is a personal project created to showcase my knowledge in Django and related libraries. The project is a web application that allows users to view products, leave reviews and ratings.
 
 ## Technologies Used
 
